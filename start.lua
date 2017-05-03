@@ -4,9 +4,6 @@ local scene = composer.newScene()
 
 local start
 
---[[
-]]
-
 function scene:create(event)
 
 	local grupoDeSena = self.view
@@ -18,7 +15,7 @@ function scene:create(event)
 	background.y = 0
 	grupoDeSena:insert(background)
 
-	start = widget.newButton( {label="start", x = display.contentWidth/2, y = display.contentHeight/2 + 80} )
+	start = widget.newButton( {label="start", x = display.contentWidth/2, y = display.contentHeight/2 + 80, onPress = startar} )
 	grupoDeSena:insert(start)
 end
 
@@ -32,7 +29,6 @@ function startar(event)
 end
 
 function scene:show(event)
-	start:addEventListener("touch",startar)
 end
 
 function scene:hide(event)

@@ -8,64 +8,71 @@ local left
 local right
 local motionX = 0
 local estrada1
+local estrada2
+local quadrado
+local flag = 1
 
 function scene:create(event)
 
 		local groupScene = self.view
 
-
-		estrada1 = display.newImage("estrada.png")
-		--estrada1.anchorX = 0
-		--estrada1.anchorY = 0
+		estrada1 = display.newImage("estrada.png")--a primeira estrada
 		estrada1.x = display.contentWidth/2
 		estrada1.y = 250
 		estrada1.speed = 2
 		groupScene:insert(estrada1)
 
-		estrada2 = display.newImage("estrada.png")
-		--estrada2.anchorX = 0
-		--estrada2.anchorY = 0
+		estrada2 = display.newImage("estrada.png")--a segunda estrada a que fica atras da tela
 		estrada2.x = display.contentWidth/2
 		estrada2.y = - 250
 		estrada2.speed = 2
 		groupScene:insert(estrada2)
 
-		image = display.newImage("ship.png")
+		image = display.newImage("ship.png")--imagem da nave
 		image.x = display.contentWidth/2
 		image.y = display.contentHeight - 100
 		image.speed = 2
-		--physics.addBody( image, "dynamic", { friction=0.5, bounce=0 } )
+		physics.addBody( image, "static", { friction=0.5, bounce=0 } )
 		groupScene:insert(image)
 
-		left = display.newRect( 0, 100, display.contentWidth/2, 400)
+		left = display.newRect( 0, 100, display.contentWidth/2, 400) -- botao esquerdo para movimentar a nave
 		left.anchorX = 0
 		left.anchorY = 0
-		--left.strokeWidth = 3
 		left:setFillColor( 0,0,0,0.1)
 		left:setStrokeColor( 1, 0, 0 )
 		groupScene:insert(left)
 
-		right = display.newRect( display.contentWidth/2, 100, display.contentWidth/2, 400)
+		right = display.newRect( display.contentWidth/2, 100, display.contentWidth/2, 400)-- botao direito para movimentar a nave 
 		right.anchorX = 0
 		right.anchorY = 0
-		--right.strokeWidth = 3
 		right:setFillColor( 0,0,0,0.1)
 		right:setStrokeColor( 1, 0, 0 )
 		groupScene:insert(right)
 
+		quadrado = display.newRect(0, 0, 20, 20) -- primeiro inimigo
+		quadrado:setFillColor(1, 0.5, 0.5, 1)
+		quadrado.x = 75
+		quadrado.y = 10
+		quadrado.speed = 1
+		groupScene:insert(right)
 
-		right:addEventListener("touch",MoverRight)
-		left:addEventListener("touch",MoverLeft)
 
-	estrada1.enterFrame = rolagemDaEstrada 
-	Runtime:addEventListener("enterFrame",estrada1)
+		right:addEventListener("touch",MoverRight) -- chama a funcao que faz fazer a nave se movimentar
+		left:addEventListener("touch",MoverLeft) -- chama a funcao que faz fazer a nave se movimentar
 
-	estrada2.enterFrame = rolagemDaEstrada 
-	Runtime:addEventListener("enterFrame",estrada2)
+		estrada1.enterFrame = scrollingRoad 
+		Runtime:addEventListener("enterFrame",estrada1) -- vai fazer a estrada rolar 
+
+		estrada2.enterFrame = scrollingRoad 
+		Runtime:addEventListener("enterFrame",estrada2) -- vai fazer a segunda estrada rolar
+
+		timer.performWithDelay( 0, Mover ,0 ) -- faz o inimigo se movimentar entre um determinado tempo
+
+		Runtime:addEventListener("collision", onCollision) -- verifica a colisao
 end
 
-function MoverRight(event)
-	--print("1")
+function MoverRight(event) -- mover a nave para a direita
+	
 	if event.phase == "began" then
   		image.x = image.x + 10
   	end
@@ -74,28 +81,70 @@ function MoverRight(event)
 	end
 end
 
-function MoverLeft(event)
---	print("2")
+function MoverLeft(event) -- mover a nave para esquerda
+	
 	if event.phase == "began" then
-  		image.x = image.x - 5
+  		image.x = image.x - 10
   	end
   	if event.phase =="ended" then
 	   motionX = 0;
 	end
 end
 
-function rolagemDaEstrada(event)
-	if event.y > 725 then--condicao pra quando o x = 385 adicionar a imagem da cidade a tras na posicao 400
+function scrollingRoad(event) -- funcao de movimento da estrada
+	if event.y > 725 then
 	   event.y = - 250
 	else
-	    event.y =  event.y + event.speed --pega avelocidade de cada cidade 
-	   -- cada cidade vai levar uns 30 segundos passando pela tela
+	    event.y =  event.y + event.speed 
 	end
 end 
 
+function onCollision(event) -- funcao de colisao
+	if event.phase == "began" then
+			print("colidiu")
+	end
+end
 
-function scene:show(event)
+function Mover(event)
 	
+	if flag == 1 then
+		movimentoQuadradoDireita()
+	elseif flag == 2 then
+		movimentoQuadradoBaixo()
+	elseif flag == 3 then
+		movimentoQuadradoesquerdo()
+	elseif flag == 4 then
+		movimentoQuadradoBaixo2()
+	end
+end
+
+function movimentoQuadradoDireita(event)
+	if quadrado.x == 250 then
+		flag = 2
+	else 
+		quadrado.x = quadrado.x + 5
+	end
+end
+
+function movimentoQuadradoBaixo(event)
+	quadrado.y = quadrado.y + 15
+	flag = 3
+end
+
+function movimentoQuadradoesquerdo(event)
+	if quadrado.x == 75 then
+		flag = 4
+	else
+		quadrado.x = quadrado.x - 5
+	end
+end
+
+function movimentoQuadradoBaixo2(event)
+	quadrado.y = quadrado.y + 15
+	flag = 1
+end
+
+function scene:show(event)	
 end
 
 function scene:hide(event)
