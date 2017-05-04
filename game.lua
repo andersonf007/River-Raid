@@ -1,5 +1,6 @@
 local widget = require( "widget" )
 local composer = require ("composer")
+local enemy = require ("enemy")
 local scene = composer.newScene()
 local physics = require("physics")
 	  physics.start()
@@ -10,8 +11,7 @@ local right
 local motionX = 0
 local estrada1
 local estrada2
-local quadrado
-local flag = 1
+
 local ButtonFire
 
 function scene:create(event)
@@ -53,13 +53,6 @@ function scene:create(event)
 
 		ButtonFire = widget.newButton({label="Fire", x = display.contentWidth/2 - 100, y = display.contentHeight/2 + 180,  shape="circle", fillColor = { default={0,0,0,0.1}, over={1,1,0.7,0.4} }}  )
 
-		quadrado = display.newRect(0, 0, 20, 20) -- primeiro inimigo
-		quadrado:setFillColor(1, 0.5, 0.5, 1)
-		quadrado.x = 75
-		quadrado.y = 10
-		quadrado.speed = 1
-		groupScene:insert(right)
-
 		right:addEventListener("touch",MoverRight) -- chama a funcao que faz fazer a nave se movimentar
 		left:addEventListener("touch",MoverLeft) -- chama a funcao que faz fazer a nave se movimentar
 
@@ -69,7 +62,7 @@ function scene:create(event)
 		estrada2.enterFrame = scrollingRoad 
 		Runtime:addEventListener("enterFrame",estrada2) -- vai fazer a segunda estrada rolar
 
-		timer.performWithDelay( 10, Mover ,0 ) -- faz o inimigo se movimentar entre um determinado tempo
+		timer.performWithDelay( 10, enemy:Mover() ,0 ) -- faz o inimigo se movimentar entre um determinado tempo
 
 		Runtime:addEventListener("collision", onCollision) -- verifica a colisao
 end
@@ -108,44 +101,7 @@ function onCollision(event) -- funcao de colisao
 	end
 end
 
-function Mover(event)
-	
-	if flag == 1 then
-		movimentoQuadradoDireita()
-	elseif flag == 2 then
-		movimentoQuadradoBaixo()
-	elseif flag == 3 then
-		movimentoQuadradoesquerdo()
-	elseif flag == 4 then
-		movimentoQuadradoBaixo2()
-	end
-end
 
-function movimentoQuadradoDireita(event)
-	if quadrado.x == 250 then
-		flag = 2
-	else 
-		quadrado.x = quadrado.x + 5
-	end
-end
-
-function movimentoQuadradoBaixo(event)
-	quadrado.y = quadrado.y + 15
-	flag = 3
-end
-
-function movimentoQuadradoesquerdo(event)
-	if quadrado.x == 75 then
-		flag = 4
-	else
-		quadrado.x = quadrado.x - 5
-	end
-end
-
-function movimentoQuadradoBaixo2(event)
-	quadrado.y = quadrado.y + 15
-	flag = 1
-end
 
 function scene:show(event)	
 end
