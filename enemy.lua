@@ -13,11 +13,9 @@ function scene:create(event)
 	quadrado.y = 10
 	quadrado.speed = 1
 	groupScene:insert(quadrado)
-
 end
 
-function Mover(event)
-	
+function Mover()	
 	if flag == 1 then
 		movimentoQuadradoDireita()
 	elseif flag == 2 then
@@ -27,7 +25,6 @@ function Mover(event)
 	elseif flag == 4 then
 		movimentoQuadradoBaixo2()
 	end
-
 end
 
 function movimentoQuadradoDireita(event)
@@ -55,7 +52,6 @@ function movimentoQuadradoBaixo2(event)
 	quadrado.y = quadrado.y + 15
 	flag = 1
 end
-
 
 function scene:show(event)	
 end
