@@ -1,5 +1,5 @@
 local composer = require ("composer")
-local scene = composer.newScene()
+local scene = {}
 local quadrado
 local flag = 1
 
@@ -15,9 +15,11 @@ function scene:createEnemy()
 --	groupScene:insert(quadrado)
 end
 
-function scene:Mover()	
+function scene:Mover()
+print("1")
 	if flag == 1 then
-		 scene:movimentoQuadradoDireita()
+
+		self:movimentoQuadradoDireita()
 	elseif flag == 2 then
 		 scene:movimentoQuadradoBaixo()
 	elseif flag == 3 then

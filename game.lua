@@ -72,9 +72,13 @@ function scene:create(event)
 		estrada2.enterFrame = scrollingRoad 
 		Runtime:addEventListener("enterFrame",estrada2) -- vai fazer a segunda estrada rolar
 
-		timer.performWithDelay( 10, enemy:Mover() ,0 ) -- faz o inimigo se movimentar entre um determinado tempo
+		timer.performWithDelay( 10,function_name ,0 ) -- faz o inimigo se movimentar entre um determinado tempo
 
 		Runtime:addEventListener("collision", onCollision) -- verifica a colisao
+end
+
+function function_name()
+	 enemy:Mover()
 end
 
 function MoverRight(event) -- mover a nave para a direita
