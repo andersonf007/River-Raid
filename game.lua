@@ -34,31 +34,40 @@ function scene:create(event)
 		image.x = display.contentWidth/2
 		image.y = display.contentHeight - 100
 		image.speed = 2
-		physics.addBody( image, "static", { friction=0.5, bounce=0 } )
+		physics.setGravity(0,0)
+		physics.addBody( image, "static" ,{friction = 1, bounce = 0} )
 		groupScene:insert(image)
 
-		left = display.newRect( 0, 100, display.contentWidth/2, 400) -- botao esquerdo para movimentar a nave
+	--[[left = display.newRect( 0, 100, display.contentWidth/2, 400) -- botao esquerdo para movimentar a nave
 		left.anchorX = 0
 		left.anchorY = 0
 		left:setFillColor( 0,0,0,0.1)
 		left:setStrokeColor( 1, 0, 0 )
+		]]
+		left = widget.newButton({width = display.contentWidth/2 + 42, height =400, x = display.contentWidth/2 - 100, y = display.contentHeight/2 + 40 ,  shape="roundedRect",fillColor = { default={ 0, 0, 0, 0.1 }, over={ 0, 0, 0.5, 1 } }, onPress = MoverLeft}  )
 		groupScene:insert(left)
 
-		right = display.newRect( display.contentWidth/2, 100, display.contentWidth/2, 400)-- botao direito para movimentar a nave 
+	--[[right = display.newRect( display.contentWidth/2, 100, display.contentWidth/2, 400)-- botao direito para movimentar a nave 
 		right.anchorX = 0
 		right.anchorY = 0
 		right:setFillColor( 0,0,0,0.1)
 		right:setStrokeColor( 1, 0, 0 )
+		]]
+		right = widget.newButton({width = display.contentWidth/2 + 42, height =400, x = display.contentWidth/2 + 100, y = display.contentHeight/2 + 40 ,  shape="roundedRect",fillColor = { default={ 0, 0, 0, 0.1 }, over={ 0, 0.0, 0.5, 1 } }, onPress = MoverRight}  )
 		groupScene:insert(right)
 
-		ButtonFire = widget.newButton({label="Fire", x = display.contentWidth/2 - 100, y = display.contentHeight/2 + 180,  shape="circle", fillColor = { default={0,0,0,0.1}, over={1,1,0.7,0.4} }}  )
+		ButtonFire = widget.newButton({label="Fire",width= 40,height =80, x = display.contentWidth/2 - 100, y = display.contentHeight/2 + 180,  shape="circle", fillColor = { default={ 1, 0.2, 0.5, 0.7 }, over={ 1, 0.2, 0.5, 1 } }}  )
 
+	--	ButtonFire = display.newCircle(display.contentWidth/2 - 100, display.contentHeight/2 + 180,20 )
+		
 		quadrado = display.newRect(0, 0, 20, 20) -- primeiro inimigo
 		quadrado:setFillColor(1, 0.5, 0.5, 1)
 		quadrado.x = 75
-		quadrado.y = 10
+		quadrado.y = 350
 		quadrado.speed = 1
-		groupScene:insert(right)
+		physics.setGravity(0,0)
+		physics.addBody( quadrado, {friction = 1, bounce = 0} )
+		groupScene:insert(quadrado)
 
 		right:addEventListener("touch",MoverRight) -- chama a funcao que faz fazer a nave se movimentar
 		left:addEventListener("touch",MoverLeft) -- chama a funcao que faz fazer a nave se movimentar
