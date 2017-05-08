@@ -44,7 +44,7 @@ function scene:create(event)
 		left:setFillColor( 0,0,0,0.1)
 		left:setStrokeColor( 1, 0, 0 )
 		]]
-		left = widget.newButton({width = display.contentWidth/2 + 42, height =400, x = display.contentWidth/2 - 100, y = display.contentHeight/2 + 40 ,  shape="roundedRect",fillColor = { default={ 0, 0, 0, 0.1 }, over={ 0, 0, 0.5, 1 } }, onPress = MoverLeft}  )
+		left = widget.newButton({width = display.contentWidth/2 + 42, height =400, x = display.contentWidth/2 - 100, y = display.contentHeight/2 + 40 ,  shape="roundedRect",fillColor = { default={ 0, 0, 0, 0.1 }, over={ 0, 0, 0, 0.1} }, onPress = MoverLeft}  )
 		groupScene:insert(left)
 
 	--[[right = display.newRect( display.contentWidth/2, 100, display.contentWidth/2, 400)-- botao direito para movimentar a nave 
@@ -53,10 +53,10 @@ function scene:create(event)
 		right:setFillColor( 0,0,0,0.1)
 		right:setStrokeColor( 1, 0, 0 )
 		]]
-		right = widget.newButton({width = display.contentWidth/2 + 42, height =400, x = display.contentWidth/2 + 100, y = display.contentHeight/2 + 40 ,  shape="roundedRect",fillColor = { default={ 0, 0, 0, 0.1 }, over={ 0, 0.0, 0.5, 1 } }, onPress = MoverRight}  )
+		right = widget.newButton({width = display.contentWidth/2 + 42, height =400, x = display.contentWidth/2 + 100, y = display.contentHeight/2 + 40 ,  shape="roundedRect",fillColor = { default={ 0, 0, 0, 0.1 }, over={ 0, 0, 0, 0.1 } }, onPress = MoverRight}  )
 		groupScene:insert(right)
-
-		ButtonFire = widget.newButton({label="Fire",width= 40,height =80, x = display.contentWidth/2 - 100, y = display.contentHeight/2 + 180,  shape="circle", fillColor = { default={ 1, 0.2, 0.5, 0.7 }, over={ 1, 0.2, 0.5, 1 } }}  )
+--PERGUNTAR COM RELACAO AO DIMENCIONAMENTO DO BOTAOs
+		ButtonFire = widget.newButton({label="Fire",width= 40,height =80, x = display.contentWidth/2 - 100, y = display.contentHeight/2 + 180,  shape="circle", fillColor = { default={ 1, 0.2, 0.5, 0.7 }, over={ 0, 0, 0, 0.1} }}  )
 
 	--	ButtonFire = display.newCircle(display.contentWidth/2 - 100, display.contentHeight/2 + 180,20 )
 		
