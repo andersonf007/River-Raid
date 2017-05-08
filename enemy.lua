@@ -3,31 +3,31 @@ local scene = composer.newScene()
 local quadrado
 local flag = 1
 
-function scene:create(event)
+function scene:createEnemy()
 	
-	local groupScene = self.view
+--	local groupScene = self.view
 	
 	quadrado = display.newRect(0, 0, 20, 20) -- primeiro inimigo
 	quadrado:setFillColor(1, 0.5, 0.5, 1)
 	quadrado.x = 75
 	quadrado.y = 10
 	quadrado.speed = 1
-	groupScene:insert(quadrado)
+--	groupScene:insert(quadrado)
 end
 
-function Mover()	
+function scene:Mover()	
 	if flag == 1 then
-		movimentoQuadradoDireita()
+		 scene:movimentoQuadradoDireita()
 	elseif flag == 2 then
-		movimentoQuadradoBaixo()
+		 scene:movimentoQuadradoBaixo()
 	elseif flag == 3 then
-		movimentoQuadradoesquerdo()
+		 scene:movimentoQuadradoesquerdo()
 	elseif flag == 4 then
-		movimentoQuadradoBaixo2()
+		 scene:movimentoQuadradoBaixo2()
 	end
 end
 
-function movimentoQuadradoDireita(event)
+function scene:movimentoQuadradoDireita()
 	if quadrado.x == 250 then
 		flag = 2
 	else 
@@ -35,12 +35,12 @@ function movimentoQuadradoDireita(event)
 	end
 end
 
-function movimentoQuadradoBaixo(event)
+function scene:movimentoQuadradoBaixo()
 	quadrado.y = quadrado.y + 15
 	flag = 3
 end
 
-function movimentoQuadradoesquerdo(event)
+function scene:movimentoQuadradoesquerdo()
 	if quadrado.x == 75 then
 		flag = 4
 	else
@@ -48,23 +48,10 @@ function movimentoQuadradoesquerdo(event)
 	end
 end
 
-function movimentoQuadradoBaixo2(event)
+function scene:movimentoQuadradoBaixo2()
 	quadrado.y = quadrado.y + 15
 	flag = 1
 end
 
-function scene:show(event)	
-end
-
-function scene:hide(event)
-end
-
-function scene:destroy(event)
-end
-
-scene:addEventListener( "create", scene ) -- adiciona o evento da funcao de criar 
-scene:addEventListener( "show", scene ) -- adiciona o evento da funcao de entre 
-scene:addEventListener( "hide", scene ) -- adiciona o evento da funcao de sair
-scene:addEventListener( "destroy", scene )-- adiciona o evento da funcao de destruir 
 
 return scene
