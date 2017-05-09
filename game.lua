@@ -8,7 +8,7 @@ local physics = require("physics")
 local image
 local left
 local right
-local motionX = 0
+--local motionX = 0
 local estrada1
 local estrada2
 
@@ -57,13 +57,15 @@ function scene:create(event)
 		estrada2.enterFrame = scrollingRoad 
 		Runtime:addEventListener("enterFrame",estrada2) -- vai fazer a segunda estrada rolar
 
-		timer.performWithDelay( 10,chamaMetodoDoEnemy ,0 ) -- faz o inimigo se movimentar entre um determinado tempo
+		timer.performWithDelay( 80,chamaMetodoDoEnemy ,0 ) -- faz o inimigo se movimentar entre um determinado tempo
 
 		Runtime:addEventListener("collision", onCollision) -- verifica a colisao
 end
 
 function chamaMetodoDoEnemy()
-	 enemy:Mover()
+	 enemy:MoverEnemy()
+	 enemy:MoverEnemy2()
+	 enemy:MoverEnemy3()	
 end
 
 function MoverRight(event) -- mover a nave para a direita
