@@ -1,4 +1,6 @@
 local composer = require ("composer")
+local physics = require("physics")
+	  physics.start()
 local enemy = {}
 local quadrado
 local flag = 1
@@ -16,7 +18,7 @@ function enemy:createEnemy()
 end
 
 function enemy:Mover()
-print("1")
+--print("1")
 	if flag == 1 then
 
 		self:movimentoQuadradoDireita()
@@ -30,7 +32,8 @@ print("1")
 end
 
 function enemy:movimentoQuadradoDireita()
-	if quadrado.x == 250 then
+	print(quadrado.x)
+	if quadrado.x >= 250 then
 		flag = 2
 	else 
 		quadrado.x = quadrado.x + 5
@@ -43,7 +46,7 @@ function enemy:movimentoQuadradoBaixo()
 end
 
 function enemy:movimentoQuadradoesquerdo()
-	if quadrado.x == 75 then
+	if quadrado.x <= 75 then
 		flag = 4
 	else
 		quadrado.x = quadrado.x - 5
