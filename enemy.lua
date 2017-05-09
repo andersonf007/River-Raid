@@ -1,35 +1,33 @@
 local composer = require ("composer")
-local scene = {}
+local enemy = {}
 local quadrado
 local flag = 1
 
-function scene:createEnemy()
-	
---	local groupScene = self.view
+function enemy:createEnemy()
 	
 	quadrado = display.newRect(0, 0, 20, 20) -- primeiro inimigo
 	quadrado:setFillColor(1, 0.5, 0.5, 1)
 	quadrado.x = 75
 	quadrado.y = 10
 	quadrado.speed = 1
---	groupScene:insert(quadrado)
+
 end
 
-function scene:Mover()
+function enemy:Mover()
 print("1")
 	if flag == 1 then
 
 		self:movimentoQuadradoDireita()
 	elseif flag == 2 then
-		 scene:movimentoQuadradoBaixo()
+		 self:movimentoQuadradoBaixo()
 	elseif flag == 3 then
-		 scene:movimentoQuadradoesquerdo()
+		 self:movimentoQuadradoesquerdo()
 	elseif flag == 4 then
-		 scene:movimentoQuadradoBaixo2()
+		 self:movimentoQuadradoBaixo2()
 	end
 end
 
-function scene:movimentoQuadradoDireita()
+function enemy:movimentoQuadradoDireita()
 	if quadrado.x == 250 then
 		flag = 2
 	else 
@@ -37,12 +35,12 @@ function scene:movimentoQuadradoDireita()
 	end
 end
 
-function scene:movimentoQuadradoBaixo()
+function enemy:movimentoQuadradoBaixo()
 	quadrado.y = quadrado.y + 15
 	flag = 3
 end
 
-function scene:movimentoQuadradoesquerdo()
+function enemy:movimentoQuadradoesquerdo()
 	if quadrado.x == 75 then
 		flag = 4
 	else
@@ -50,10 +48,10 @@ function scene:movimentoQuadradoesquerdo()
 	end
 end
 
-function scene:movimentoQuadradoBaixo2()
+function enemy:movimentoQuadradoBaixo2()
 	quadrado.y = quadrado.y + 15
 	flag = 1
 end
 
 
-return scene
+return enemy

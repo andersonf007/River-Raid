@@ -20,14 +20,6 @@ function scene:create(event)
 
 		local groupScene = self.view
 
---[[
-	quadrado = display.newRect(0, 0, 20, 20) -- primeiro inimigo
-	quadrado:setFillColor(1, 0.5, 0.5, 1)
-	quadrado.x = 75
-	quadrado.y = 10
-	quadrado.speed = 1
-	groupScene:insert(quadrado)
-]]
 		estrada1 = display.newImage("estrada.png")--a primeira estrada
 		estrada1.x = display.contentWidth/2
 		estrada1.y = 250
@@ -72,12 +64,12 @@ function scene:create(event)
 		estrada2.enterFrame = scrollingRoad 
 		Runtime:addEventListener("enterFrame",estrada2) -- vai fazer a segunda estrada rolar
 
-		timer.performWithDelay( 10,function_name ,0 ) -- faz o inimigo se movimentar entre um determinado tempo
+		timer.performWithDelay( 10,chamaMetodoDoEnemy ,0 ) -- faz o inimigo se movimentar entre um determinado tempo
 
 		Runtime:addEventListener("collision", onCollision) -- verifica a colisao
 end
 
-function function_name()
+function chamaMetodoDoEnemy()
 	 enemy:Mover()
 end
 
