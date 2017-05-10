@@ -45,7 +45,7 @@ function scene:create(event)
 
 		right = widget.newButton({width = display.contentWidth/2 + 42, height =400, x = display.contentWidth/2 + 100, y = display.contentHeight/2 + 40 ,  shape="roundedRect",fillColor = { default={ 0, 0, 0, 0.1 }, over={ 0, 0, 0, 0.1 } }, onPress = MoverRight}  )
 		groupScene:insert(right)
---PERGUNTAR COM RELACAO AO DIMENCIONAMENTO DO BOTAOs
+		--PERGUNTAR COM RELACAO AO DIMENCIONAMENTO DO BOTAOs
 		ButtonFire = widget.newButton({label="Fire",width= 40,height =80, x = display.contentWidth/2 - 100, y = display.contentHeight/2 + 180,  shape="circle", fillColor = { default={ 1, 0.2, 0.5, 0.7 }, over={ 0, 0, 0, 0.1} }}  )
 
 		right:addEventListener("touch",MoverRight) -- chama a funcao que faz fazer a nave se movimentar
@@ -63,9 +63,11 @@ function scene:create(event)
 end
 
 function chamaMetodoDoEnemy()
-	 enemy:MoverEnemy()
-	 enemy:MoverEnemy2()
-	 enemy:MoverEnemy3()	
+	enemy:MoverEnemy()
+	enemy:MoverEnemy2()
+	enemy:MoverEnemy3()
+	enemy:MoverEnemy4()	
+
 end
 
 function MoverRight(event) -- mover a nave para a direita

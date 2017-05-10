@@ -5,9 +5,11 @@ local enemy = {}
 local inimigo
 local inimigo2
 local inimigo3
+local inimigo4
 local flag = 1
 local flag2 = 1
 local flag3 = 1
+local flag4 = 1
 
 function enemy:createEnemy()
 	
@@ -30,11 +32,30 @@ function enemy:createEnemy()
 	inimigo3 = display.newRect(0, 0, 20, 20) -- terceiro inimigo
 	inimigo3:setFillColor(1, 0.5, 0.9, 1)
 	inimigo3.x = 240
-	inimigo3.y = 100
+	inimigo3.y = 130
 	inimigo3.speed = 1
 	physics.setGravity(0,0)
 	physics.addBody( inimigo3, {friction = 1, bounce = 0} )
 
+	inimigo4 = display.newRect(0, 0, 20, 20) -- terceiro inimigo
+	inimigo4:setFillColor(1, 0.5, 0.9, 0.6)
+	inimigo4.x = 240
+	inimigo4.y = - 120
+	inimigo4.speed = 1
+	physics.setGravity(0,0)
+	physics.addBody( inimigo4, {friction = 1, bounce = 0} )
+	
+	inimigo.enterFrame = scrollEnemy1
+	Runtime:addEventListener("enterFrame", inimigo)
+
+	inimigo2.enterFrame = scrollEnemy2
+	Runtime:addEventListener("enterFrame", inimigo2)
+
+	inimigo3.enterFrame = scrollEnemy3
+	Runtime:addEventListener("enterFrame", inimigo3)
+	
+	inimigo4.enterFrame = scrollEnemy4
+	Runtime:addEventListener("enterFrame", inimigo4)
 end
 
 -------//ENEMY1/////////////////////////////////////////////////////////////////////////////------
@@ -81,7 +102,7 @@ end
 
 -------//ENEMY2/////////////////////////////////////////////////////////////////////////////------
 function enemy:MoverEnemy2()
-	--print("1")
+	
 	if flag2 == 1 then
 		self:moverEnemy2Right()
 	elseif flag2 == 2 then
@@ -117,7 +138,6 @@ end
 
 function enemy:moverEnemy2Down2()
 	inimigo2.y = inimigo2.y + 15
-
 	flag2 = 1
 end
 -------//ENEMY3////////////////////////////////////////////////////////////////////////////-------
@@ -132,8 +152,7 @@ function enemy:MoverEnemy3()
 		self:moverEnemy3Right()
 	elseif flag3 == 4 then
 		 self:moverEnemy3Down2()
-	end
-	
+	end	
 end
 
 function enemy:moverEnemy3Left()
@@ -161,6 +180,73 @@ end
 function enemy:moverEnemy3Down2()
 	inimigo3.y = inimigo3.y + 15
 	flag3 = 1
+end
+
+-------//ENEMY4////////////////////////////////////////////////////////////////////////////-------
+
+function enemy:MoverEnemy4()
+	if flag4 == 1 then
+		 self:moverEnemy4Left()
+	elseif flag4 == 2 then
+		 self:moverEnemy4Down()
+	elseif flag4 == 3 then
+		self:moverEnemy4Right()
+	elseif flag4 == 4 then
+		 self:moverEnemy4Down2()
+	end	
+end
+
+function enemy:moverEnemy4Left()
+
+	if inimigo4.x <= 195 then
+		flag4 = 2
+	else
+		inimigo4.x = inimigo4.x - 5
+	end
+end
+
+function enemy:moverEnemy4Down()
+	inimigo4.y = inimigo4.y + 15
+	flag4 = 3
+end
+
+function enemy:moverEnemy4Right()
+	if inimigo4.x >= 250 then
+		flag4 = 4
+	else
+		inimigo4.x = inimigo4.x + 5
+	end
+end
+
+function enemy:moverEnemy4Down2()
+	inimigo4.y = inimigo4.y + 15
+	flag4 = 1
+end
+
+---------------------------------------------------------------------------------------------------
+
+function scrollEnemy1(event)
+	if event.y >= 470 then
+		event.y = 0
+	end
+end
+
+function scrollEnemy2(event)
+	if event.y >= 470 then
+		event.y = 0
+	end
+end
+
+function scrollEnemy3(event)
+	if event.y >= 470 then
+		event.y = 0
+	end
+end
+
+function scrollEnemy4(event)
+	if event.y >= 470 then
+		event.y = 0
+	end
 end
 
 return enemy
