@@ -11,7 +11,7 @@ local flag2 = 1
 local flag3 = 1
 local flag4 = 1
 
-function enemy:createEnemy()
+function enemy:createEnemy() -- criar inimigo
 	
 	inimigo = display.newRect(0, 0, 20, 20) -- primeiro inimigo
 	inimigo:setFillColor(1, 0.5, 0.5, 1)
@@ -44,18 +44,6 @@ function enemy:createEnemy()
 	inimigo4.speed = 1
 	physics.setGravity(0,0)
 	physics.addBody( inimigo4, {friction = 1, bounce = 0} )
-	
-	inimigo.enterFrame = scrollEnemy1
-	Runtime:addEventListener("enterFrame", inimigo)
-
-	inimigo2.enterFrame = scrollEnemy2
-	Runtime:addEventListener("enterFrame", inimigo2)
-
-	inimigo3.enterFrame = scrollEnemy3
-	Runtime:addEventListener("enterFrame", inimigo3)
-	
-	inimigo4.enterFrame = scrollEnemy4
-	Runtime:addEventListener("enterFrame", inimigo4)
 end
 
 -------//ENEMY1/////////////////////////////////////////////////////////////////////////////------
@@ -225,28 +213,38 @@ end
 
 ---------------------------------------------------------------------------------------------------
 
-function scrollEnemy1(event)
-	if event.y >= 470 then
-		event.y = 0
+function enemy:scrollEnemy1() -- movimenta o inimigo 1
+	if inimigo.y >= 470 then
+		inimigo.y = 0
 	end
 end
 
-function scrollEnemy2(event)
-	if event.y >= 470 then
-		event.y = 0
+function enemy:scrollEnemy2()  -- movimenta o inimigo 2
+	if inimigo2.y >= 470 then
+		inimigo2.y = 0
 	end
 end
 
-function scrollEnemy3(event)
-	if event.y >= 470 then
-		event.y = 0
+function enemy:scrollEnemy3()  -- movimenta o inimigo 3
+	if inimigo3.y >= 470 then
+		inimigo3.y = 0
 	end
 end
 
-function scrollEnemy4(event)
-	if event.y >= 470 then
-		event.y = 0
+function enemy:scrollEnemy4()  -- movimenta o inimigo 4
+	if inimigo4.y >= 470 then
+		inimigo4.y = 0
 	end
 end
+
+function enemy:destroy() -- remove todos os inimigos 
+
+	inimigo:removeSelf()
+	inimigo2:removeSelf()
+	inimigo3:removeSelf()
+	inimigo4:removeSelf() 
+end
+
+
 
 return enemy
