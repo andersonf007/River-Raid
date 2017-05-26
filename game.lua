@@ -115,6 +115,7 @@ end
 
 function onCollision(event) -- funcao de colisao
 	if event.phase == "began" then
+		print(enemy.inimigo.x)
 		timer.cancel(trm)
 		display.remove(ButtonFire)
 		enemy:destroy()

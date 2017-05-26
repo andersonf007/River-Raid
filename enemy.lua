@@ -2,17 +2,13 @@ local composer = require ("composer")
 local physics = require("physics")
 	  physics.start()
 local enemy = {}
-local inimigo
-local inimigo2
-local inimigo3
-local inimigo4
 local flag = 1
 local flag2 = 1
 local flag3 = 1
 local flag4 = 1
 
 function enemy:createEnemy() -- criar inimigo
-	
+	print("oi")
 	inimigo = display.newRect(0, 0, 20, 20) -- primeiro inimigo
 	inimigo:setFillColor(1, 0.5, 0.5, 1)
 	inimigo.x = 70
@@ -244,7 +240,5 @@ function enemy:destroy() -- remove todos os inimigos
 	inimigo3:removeSelf()
 	inimigo4:removeSelf() 
 end
-
-
 
 return enemy
