@@ -19,9 +19,9 @@ function startEnemy() -- cria os inimigos depois do game over
 	trm = timer.performWithDelay( 80,chamaMetodoDoEnemy ,0 ) 
 end
 
-function startGame()
+function startGame() -- inicializa o botao de tiro depois do game over
+	
 	ButtonFire = widget.newButton({label="Fire",width= 40,height =80, x = display.contentWidth/2 - 100, y = display.contentHeight/2 + 180,  shape="circle", fillColor = { default={ 1, 0.2, 0.5, 0.7 }, over={ 0, 0, 0, 0.1} }, onPress = createLaser}  )
-
 end
 
 function scene:create(event)
@@ -66,11 +66,11 @@ function scene:create(event)
 		Runtime:addEventListener("collision", onCollision) -- verifica a colisao
 end
 
-function chamaMetodoDoEnemy()
+function chamaMetodoDoEnemy()-- chama os metodos dos inimigos
 	enemy:MoverEnemy()
 	enemy:MoverEnemy2()
 	enemy:MoverEnemy3()
-	enemy:MoverEnemy4()	-- chama os metodos dos inimigos
+	enemy:MoverEnemy4()	
 	enemy:scrollEnemy1()
 	enemy:scrollEnemy2()
 	enemy:scrollEnemy3()
@@ -113,9 +113,12 @@ function scrollingRoadEstrada2(event) -- funcao de movimento da estrada
 	end
 end 
 
-function onCollision(event) -- funcao de colisao
-	if event.phase == "began" then
-		print(enemy.inimigo.x)
+function onCollision(self,event) -- funcao de colisao
+	--  print( event.target )      
+      print( event.other.x )         
+    --  print( event.selfElement )   
+     -- print( event.otherElement )
+	if event.phase == "began" then		
 		timer.cancel(trm)
 		display.remove(ButtonFire)
 		enemy:destroy()
