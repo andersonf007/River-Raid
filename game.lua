@@ -10,6 +10,7 @@ local left
 local right
 local estrada1
 local estrada2
+local laser
 local ButtonFire
 
 enemy:createEnemy()
@@ -27,6 +28,14 @@ end
 function scene:create(event)
 
 		local groupScene = self.view
+        
+        --[[
+		linha = display.newLine(0,0,display.contentWidth,0)
+		linha:setStrokeColor( 0, 0, 0, 0.1 )
+		linha.strokeWidth = 1 
+		physics.addBody( linha, "static" ,{friction = 1, bounce = 0} )
+		groupScene:insert(linha)
+        ]]
 
 		estrada1 = display.newImage("estrada.png")--a primeira estrada
 		estrada1.x = display.contentWidth/2
@@ -47,26 +56,26 @@ function scene:create(event)
 		physics.setGravity(0,0)
 		physics.addBody( image, "static" ,{friction = 1, bounce = 0} )
 		groupScene:insert(image)
-
+		--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 		left = widget.newButton({width = display.contentWidth/2 + 42, height =400, x = display.contentWidth/2 - 100, y = display.contentHeight/2 + 40 ,  shape="roundedRect",fillColor = { default={ 0, 0, 0, 0.1 }, over={ 0, 0, 0, 0.1} }, onPress = MoverLeft}  )
 		groupScene:insert(left)
-
+		--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		right = widget.newButton({width = display.contentWidth/2 + 42, height =400, x = display.contentWidth/2 + 100, y = display.contentHeight/2 + 40 ,  shape="roundedRect",fillColor = { default={ 0, 0, 0, 0.1 }, over={ 0, 0, 0, 0.1 } }, onPress = MoverRight}  )
 		groupScene:insert(right)
-	
-		ButtonFire = widget.newButton({label="Fire",width= 40,height =80, x = display.contentWidth/2 - 100, y = display.contentHeight/2 + 180,  shape="circle", fillColor = { default={ 1, 0.2, 0.5, 0.7 }, over={ 0, 0, 0, 0.1} }, onPress = createLaser}  )
-
+	    --////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		ButtonFire = widget.newButton({label="Fire",width= 40,height =80, x = display.contentWidth/2 - 100, y = display.contentHeight/2 + 180,  shape="circle", fillColor = { default={ 0, 0, 0, 0.1 }, over={ 0, 0, 0, 0.1} }, onPress = createLaser}  )
+		--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		right:addEventListener("touch",MoverRight) -- chama a funcao que faz fazer a nave se movimentar
 		left:addEventListener("touch",MoverLeft) -- chama a funcao que faz fazer a nave se movimentar
-
+		--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		timer.performWithDelay( 80,scrollingRoadEstrada2 ,0 )
 		timer.performWithDelay( 80,scrollingRoadEstrada1 ,0 )
 		trm = timer.performWithDelay( 80,chamaMetodoDoEnemy ,0 ) -- faz o inimigo se movimentar entre um determinado tempo
-
-		Runtime:addEventListener("collision", onCollision) -- verifica a colisao
+		--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		Runtime:addEventListener("collision", onCollision) -- verifica a colisao	
 end
 
-function chamaMetodoDoEnemy()-- chama os metodos dos inimigos
+ function chamaMetodoDoEnemy()-- chama os metodos dos inimigos
 	enemy:MoverEnemy()
 	enemy:MoverEnemy2()
 	enemy:MoverEnemy3()
@@ -77,7 +86,7 @@ function chamaMetodoDoEnemy()-- chama os metodos dos inimigos
 	enemy:scrollEnemy4()
 end
 
-function MoverRight(event) -- mover a nave para a direita
+ function MoverRight(event) -- mover a nave para a direita
 	
 	if event.phase == "began" then
   		image.x = image.x + 10
@@ -87,7 +96,7 @@ function MoverRight(event) -- mover a nave para a direita
 	end
 end
 
-function MoverLeft(event) -- mover a nave para esquerda
+ function MoverLeft(event) -- mover a nave para esquerda
 	
 	if event.phase == "began" then
   		image.x = image.x - 10
@@ -97,7 +106,7 @@ function MoverLeft(event) -- mover a nave para esquerda
 	end
 end
 
-function scrollingRoadEstrada1(event) -- funcao de movimento da estrada
+ function scrollingRoadEstrada1(event) -- funcao de movimento da estrada
 	if estrada1.y > 725 then
 	   estrada1.y = - 250
 	else
@@ -105,7 +114,7 @@ function scrollingRoadEstrada1(event) -- funcao de movimento da estrada
 	end
 end 
 
-function scrollingRoadEstrada2(event) -- funcao de movimento da estrada
+ function scrollingRoadEstrada2(event) -- funcao de movimento da estrada
 	if estrada2.y > 725 then
 	   estrada2.y = - 250
 	else
@@ -113,32 +122,85 @@ function scrollingRoadEstrada2(event) -- funcao de movimento da estrada
 	end
 end 
 
-function onCollision(self,event) -- funcao de colisao
-	--  print( event.target )      
-      print( event.other.x )         
-    --  print( event.selfElement )   
-     -- print( event.otherElement )
-	if event.phase == "began" then		
-		timer.cancel(trm)
-		display.remove(ButtonFire)
-		enemy:destroy()
-		composer.gotoScene("gameover")
+ function onCollision(event) -- funcao de colisao
+	  
+	if event.phase == "began" then	
+
+
+		print(inimigo2.x)
+		print(laser.y)
+		print(event.target)
+	--	inimigo2:removeSelf()
+
+	--enemy:scrollEnemy2()
+		--print(event.target.x)
+		--print(self.other)
+	--	print(event.other.x)
+
+		--timer.cancel(trm)
+		--display.remove(ButtonFire)
+		--enemy:destroy()
+		--composer.gotoScene("gameover")
+	
+	
 	end
 end
 
-function createLaser(evento) -- cria o laser
-  local laser = display.newImage("Lazer.png")
-  physics.addBody( laser, "dinamic", {isSensor = true})
-  laser.isBullet = true --  para se o corpo deve ser tratado como uma "bala". As balas estão sujeitas a detecção contínua de colisão em vez de detecção periódica de colisão em etapas de tempo
-  laser.x = image.x
-  laser.y = image.y - 50
-  laser.collType = "laser"
-  --laser:toBack( )
-  
-  transition.to( laser, {y= 10, time = 500, onComplete = function() display.remove( laser )--verificar colisão!!
-  end} )
+ function createLaser(event) -- cria o laser
+	ButtonFire:setEnabled( false )
+	group = display.newGroup()
+	laser = display.newImage("Lazer.png")
+	physics.addBody( laser, "dinamic", {isSensor = true})
+	laser.isBullet = true --  para se o corpo deve ser tratado como uma "bala". As balas estão sujeitas a detecção contínua de colisão em vez de detecção periódica de colisão em etapas de tempo
+	laser.x = image.x
+	laser.y = image.y - 50
+	laser.collType = "laser"
+	
+	--laser:addEventListener("tap",function_name)
+	--grupos[#grupos+1] = laser
+	group:insert( laser )
+
+	 tm = timer.performWithDelay(10,moverLaser,0)
+	
+--	transition.to(laser,{time=500,y = 20, transition = easing.linear, onComplete = display.remove(laser)})
+--  transition.to( laser, {y= 20, time = 500, onComplete = function() display.remove( laser )end} )
+end
+function moverLaser()
+
+	for i=1,group.numChildren do
+
+   		if group[i].y <= 20 then
+   			--print("menor")
+   			display.remove( laser )
+   			timer.cancel(tm)
+   			ButtonFire:setEnabled( true )
+   		else 
+			laser:translate( 0, -25 )
+		end
+    --local child = group[i]
+    --local description = (child.isVisible and "visible") or "not visible"
+    --print( "child["..i.."] is " .. description )
+	end
 end
 
+--[[
+function function_name(event)
+	-- transition.to( laser, {y=10, time = 500, onComplete = function() display.remove( laser )end} )
+	-- transition.to( event.target, {y=10, time = 500, onComplete = function() display.remove( event.target )end} )
+	-- return true
+end]]
+--[[
+function moverLaser()
+
+	if laser.y <= 110 then
+		display.remove( laser )
+		timer.cancel(tm)
+	else
+		
+	laser:translate( 0, -10 )
+	end
+end
+]]
 function scene:show(event)
 end
 

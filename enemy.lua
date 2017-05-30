@@ -12,7 +12,7 @@ function enemy:createEnemy() -- criar inimigo
 	inimigo = display.newRect(0, 0, 20, 20) -- primeiro inimigo
 	inimigo:setFillColor(1, 0.5, 0.5, 1)
 	inimigo.x = 70
-	inimigo.y = 10
+	inimigo.y = 20
 	inimigo.speed = 1
 	physics.setGravity(0,0)
 	physics.addBody( inimigo, {friction = 1, bounce = 0} )
