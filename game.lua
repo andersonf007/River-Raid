@@ -4,6 +4,7 @@ local enemy = require ("enemy")
 local scene = composer.newScene()
 local physics = require("physics")
 	  physics.start()
+	  physics.setDrawMode('hybrid')
 
 local image
 local left
@@ -45,7 +46,7 @@ function scene:create(event)
 
 		estrada2 = display.newImage("estrada.png")--a segunda estrada a que fica atras da tela
 		estrada2.x = display.contentWidth/2
-		estrada2.y = - 250
+		estrada2.y = - 409
 		estrada2.speed = 5
 		groupScene:insert(estrada2)
 
@@ -72,7 +73,8 @@ function scene:create(event)
 		timer.performWithDelay( 80,scrollingRoadEstrada1 ,0 )
 		trm = timer.performWithDelay( 80,chamaMetodoDoEnemy ,0 ) -- faz o inimigo se movimentar entre um determinado tempo
 		--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		Runtime:addEventListener("collision", onCollision) -- verifica a colisao	
+		image:addEventListener("collision", onCollision) -- verifica a colisao	
+
 end
 
  function chamaMetodoDoEnemy()-- chama os metodos dos inimigos
@@ -86,7 +88,7 @@ end
 	enemy:scrollEnemy4()
 end
 
- function MoverRight(event) -- mover a nave para a direita
+function MoverRight(event) -- mover a nave para a direita
 	
 	if event.phase == "began" then
   		image.x = image.x + 10
@@ -96,7 +98,7 @@ end
 	end
 end
 
- function MoverLeft(event) -- mover a nave para esquerda
+function MoverLeft(event) -- mover a nave para esquerda
 	
 	if event.phase == "began" then
   		image.x = image.x - 10
@@ -106,30 +108,35 @@ end
 	end
 end
 
- function scrollingRoadEstrada1(event) -- funcao de movimento da estrada
-	if estrada1.y > 725 then
-	   estrada1.y = - 250
+function scrollingRoadEstrada1(event) -- funcao de movimento da estrada
+	if estrada1.y > 896 then
+	   estrada1.y = - 400
 	else
 	    estrada1.y =  estrada1.y + estrada1.speed 
 	end
 end 
 
- function scrollingRoadEstrada2(event) -- funcao de movimento da estrada
-	if estrada2.y > 725 then
-	   estrada2.y = - 250
+function scrollingRoadEstrada2(event) -- funcao de movimento da estrada
+	if estrada2.y > 896 then
+	   estrada2.y = - 409
 	else
 	    estrada2.y =  estrada2.y + estrada2.speed 
 	end
 end 
 
- function onCollision(event) -- funcao de colisao
+function onCollision(event) -- funcao de colisao
 	  
 	if event.phase == "began" then	
+		--target.x = laser
+		--other.x = inimigo
 
+		--target.x = nave
 
-		print(inimigo2.x)
-		print(laser.y)
-		print(event.target)
+	--	print(inimigo2.x)
+	--	print(laser.x)
+		print(image.x)
+		print(event.target.x)
+		print(event.other.x)
 	--	inimigo2:removeSelf()
 
 	--enemy:scrollEnemy2()
@@ -146,7 +153,7 @@ end
 	end
 end
 
- function createLaser(event) -- cria o laser
+function createLaser(event) -- cria o laser
 	ButtonFire:setEnabled( false )
 	group = display.newGroup()
 	laser = display.newImage("Lazer.png")
@@ -155,6 +162,7 @@ end
 	laser.x = image.x
 	laser.y = image.y - 50
 	laser.collType = "laser"
+	laser:addEventListener("collision", onCollision)
 	
 	--laser:addEventListener("tap",function_name)
 	--grupos[#grupos+1] = laser
