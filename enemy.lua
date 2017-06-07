@@ -14,6 +14,7 @@ function enemy:createEnemy() -- criar inimigo
 	inimigo.x = 70
 	inimigo.y = 20
 	inimigo.speed = 1
+	inimigo.name = "inimigo"
 	physics.setGravity(0,0)
 	physics.addBody( inimigo, {friction = 1, bounce = 0} )
 
@@ -22,6 +23,7 @@ function enemy:createEnemy() -- criar inimigo
 	inimigo2.x = 70
 	inimigo2.y = 250
 	inimigo2.speed = 1
+	inimigo2.name = "inimigo2"
 	physics.setGravity(0,0)
 	physics.addBody( inimigo2, {friction = 1, bounce = 0} )
 
@@ -30,6 +32,7 @@ function enemy:createEnemy() -- criar inimigo
 	inimigo3.x = 240
 	inimigo3.y = 130
 	inimigo3.speed = 1
+	inimigo3.name = "inimigo3"
 	physics.setGravity(0,0)
 	physics.addBody( inimigo3, {friction = 1, bounce = 0} )
 
@@ -38,6 +41,7 @@ function enemy:createEnemy() -- criar inimigo
 	inimigo4.x = 240
 	inimigo4.y = - 120
 	inimigo4.speed = 1
+	inimigo4.name = "inimigo4"
 	physics.setGravity(0,0)
 	physics.addBody( inimigo4, {friction = 1, bounce = 0} )
 end
@@ -241,6 +245,24 @@ function enemy:destroy() -- remove todos os inimigos depois da colisao
 	inimigo4:removeSelf() 
 end
 
+function enemy:changePositionY1()
+	inimigo.y = 470
+	enemy:scrollEnemy1()
+end
 
+function enemy:changePositionY2()
+	inimigo2.y = 470
+	enemy:scrollEnemy2()
+end
+
+function enemy:changePositionY3()
+	inimigo3.y = 470
+	enemy:scrollEnemy3()
+end
+
+function enemy:changePositionY4()
+	inimigo4.y = 470
+	enemy:scrollEnemy4()
+end
 
 return enemy
