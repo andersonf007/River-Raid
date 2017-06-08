@@ -7,14 +7,36 @@ local flag2 = 1
 local flag3 = 1
 local flag4 = 1
 
+
+function criarInimigo(x,y,nome)
+
+	inimigo = display.newRect(0, 0, 20, 20) -- primeiro inimigo
+	inimigo:setFillColor(1, 0.5, 0.5, 1)
+	inimigo.x = x
+	inimigo.y = y
+	inimigo.speed = 1
+	inimigo.name = nome
+	inimigo.validacao = true
+	physics.setGravity(0,0)
+	physics.addBody( inimigo, {friction = 1, bounce = 0} )
+	return inimigo
+
+end
+
 function enemy:createEnemy() -- criar inimigo
 	
+	inimigo1 = criarInimigo(70,20,"inimigo1")
+	inimigo2 = criarInimigo(70,250,"inimigo2")
+	inimigo3 = criarInimigo(240,130,"inimigo3")
+	inimigo4 = criarInimigo(240,220,"inimigo4")
+--[[
 	inimigo = display.newRect(0, 0, 20, 20) -- primeiro inimigo
 	inimigo:setFillColor(1, 0.5, 0.5, 1)
 	inimigo.x = 70
 	inimigo.y = 20
 	inimigo.speed = 1
 	inimigo.name = "inimigo"
+	inimigo.validacao = true
 	physics.setGravity(0,0)
 	physics.addBody( inimigo, {friction = 1, bounce = 0} )
 
@@ -24,6 +46,7 @@ function enemy:createEnemy() -- criar inimigo
 	inimigo2.y = 250
 	inimigo2.speed = 1
 	inimigo2.name = "inimigo2"
+	inimigo2.validacao = true
 	physics.setGravity(0,0)
 	physics.addBody( inimigo2, {friction = 1, bounce = 0} )
 
@@ -44,6 +67,7 @@ function enemy:createEnemy() -- criar inimigo
 	inimigo4.name = "inimigo4"
 	physics.setGravity(0,0)
 	physics.addBody( inimigo4, {friction = 1, bounce = 0} )
+]]
 end
 
 -------//ENEMY1/////////////////////////////////////////////////////////////////////////////------
@@ -62,35 +86,38 @@ end
 
 function enemy:moverEnemyRight()
 	--print(inimigo.x)
-	if inimigo.x >= 125 then
-		flag = 2
-	else 
-		inimigo.x = inimigo.x + 5
+	if inimigo1.validacao == true then
+
+		if inimigo1.x >= 125 then
+			flag = 2
+		else 
+			inimigo1.x = inimigo1.x + 5
+		end
 	end
 end
 
 function enemy:moverEnemyDown()
-	inimigo.y = inimigo.y + 15
+	inimigo1.y = inimigo1.y + 15
 	flag = 3
 end
 
 function enemy:moverEnemyLeft()
-	if inimigo.x <= 70 then
+	if inimigo1.x <= 70 then
 		flag = 4
 	else
-		inimigo.x = inimigo.x - 5
+		inimigo1.x = inimigo1.x - 5
 	end
 end
 
 function enemy:moverEnemyDown2()
-	inimigo.y = inimigo.y + 15
+	inimigo1.y = inimigo1.y + 15
 
 	flag = 1
 end
 
 -------//ENEMY2/////////////////////////////////////////////////////////////////////////////------
 function enemy:MoverEnemy2()
-	
+
 	if flag2 == 1 then
 		self:moverEnemy2Right()
 	elseif flag2 == 2 then
@@ -100,33 +127,48 @@ function enemy:MoverEnemy2()
 	elseif flag2 == 4 then
 		 self:moverEnemy2Down2()
 	end
+
 end
 
 function enemy:moverEnemy2Right()
-	--print(inimigo.x)
-	if inimigo2.x >= 125 then
-		flag2 = 2
-	else 
-		inimigo2.x = inimigo2.x + 5
+
+	if inimigo2.validacao == true then
+		--print(inimigo.x)
+		if inimigo2.x >= 125 then
+			flag2 = 2
+		else 
+			inimigo2.x = inimigo2.x + 5
+		end
 	end
 end
 
 function enemy:moverEnemy2Down()
-	inimigo2.y = inimigo2.y + 15
-	flag2 = 3
+
+	if inimigo2.validacao == true then
+
+		inimigo2.y = inimigo2.y + 15
+		flag2 = 3
+	end
 end
 
 function enemy:moverEnemy2Left()
-	if inimigo2.x <= 70 then
-		flag2 = 4
-	else
-		inimigo2.x = inimigo2.x - 5
+
+	if inimigo2.validacao == true then
+
+		if inimigo2.x <= 70 then
+			flag2 = 4
+		else
+			inimigo2.x = inimigo2.x - 5
+		end
 	end
 end
 
 function enemy:moverEnemy2Down2()
-	inimigo2.y = inimigo2.y + 15
-	flag2 = 1
+
+	if inimigo2.validacao == true then
+		inimigo2.y = inimigo2.y + 15
+		flag2 = 1
+	end
 end
 -------//ENEMY3////////////////////////////////////////////////////////////////////////////-------
 
@@ -214,14 +256,16 @@ end
 ---------------------------------------------------------------------------------------------------
 
 function enemy:scrollEnemy1() -- movimenta de restauracao do inimigo 1 depois que ele sai da tela
-	if inimigo.y >= 470 then
-		inimigo.y = 0
+	if inimigo1.y >= 470 then
+		inimigo1.y = 0
 	end
 end
 
 function enemy:scrollEnemy2()  -- movimenta de restauracao do inimigo 2 depois que ele sai da tela
-	if inimigo2.y >= 470 then
-		inimigo2.y = 0
+	if inimigo2.validacao == true then
+		if inimigo2.y >= 470 then
+			inimigo2.y = 0
+		end
 	end
 end
 
@@ -239,20 +283,28 @@ end
 
 function enemy:destroy() -- remove todos os inimigos depois da colisao
 
-	inimigo:removeSelf()
+	inimigo1:removeSelf()
 	inimigo2:removeSelf()
 	inimigo3:removeSelf()
 	inimigo4:removeSelf() 
 end
 
 function enemy:changePositionY1()
-	inimigo.y = 470
+	inimigo1.y = 470
 	enemy:scrollEnemy1()
 end
 
 function enemy:changePositionY2()
-	inimigo2.y = 470
-	enemy:scrollEnemy2()
+	print("ohkfhakj")
+	if inimigo2.validacao == false then
+		inimigo2.y = 500
+		--enemy:scrollEnemy2()
+		inimigo2.validacao = true
+		flag2 = 1
+		inimigo2 = criarInimigo(70,0,"inimigo2")
+		--enemy:MoverEnemy2()
+
+	end
 end
 
 function enemy:changePositionY3()

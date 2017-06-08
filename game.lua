@@ -24,21 +24,14 @@ function startEnemy() -- cria os inimigos depois do game over
 end
 
 function startGame() -- inicializa o botao de tiro depois do game over	
+
 	ButtonFire = widget.newButton({label="Fire",width= 20,height =40, x = display.contentWidth/2 - 100, y = display.contentHeight/2 + 200,  shape="circle", fillColor = { default={ 1, 0, 1, 1 }, over={ 0, 1, 1, 1} }, onPress = createLaser}  )
 end
 
 function scene:create(event)
 
 		local groupScene = self.view
-        
-        --[[
-		linha = display.newLine(0,0,display.contentWidth,0)
-		linha:setStrokeColor( 0, 0, 0, 0.1 )
-		linha.strokeWidth = 1 
-		physics.addBody( linha, "static" ,{friction = 1, bounce = 0} )
-		groupScene:insert(linha)
-        ]]
-
+     
 		estrada1 = display.newImage("estrada.png")--a primeira estrada
 		estrada1.x = display.contentWidth/2
 		estrada1.y = 250
@@ -139,22 +132,28 @@ function onCollision(event) -- funcao de colisao
 	
 		elseif event.target.name == "laser" then
 
-			if event.other.name == "inimigo" then
+			if event.other.name == "inimigo1" then
+				timer.pause(trm)
 				display.remove(event.target)
 				display.remove(event.other)
-				timer.pauser(trm)
+				
 				--event.other.y = 470
 				--enemy:scrollEnemy1()
 				enemy:changePositionY1()
+				ButtonFireValidacao = true
 
 			end
 			if event.other.name == "inimigo2" then
+				timer.pause(trm)
+
 				display.remove(event.target)
 				display.remove(event.other)
-				--event.other.y = 470
+				inimigo2.validacao = false
+								--event.other.y = 470
 				--enemy:scrollEnemy2()
 				enemy:changePositionY2()
-
+				timer.resume(trm)
+				ButtonFireValidacao = true
 				
 			end
 			if event.other.name == "inimigo3" then
