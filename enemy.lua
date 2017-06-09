@@ -28,7 +28,7 @@ function enemy:createEnemy() -- criar inimigo
 	inimigo1 = criarInimigo(70,20,"inimigo1")
 	inimigo2 = criarInimigo(70,250,"inimigo2")
 	inimigo3 = criarInimigo(240,130,"inimigo3")
-	inimigo4 = criarInimigo(240,220,"inimigo4")
+	inimigo4 = criarInimigo(240,-180,"inimigo4")
 --[[
 	inimigo = display.newRect(0, 0, 20, 20) -- primeiro inimigo
 	inimigo:setFillColor(1, 0.5, 0.5, 1)
@@ -295,13 +295,13 @@ function enemy:changePositionY1()
 end
 
 function enemy:changePositionY2()
-	print("ohkfhakj")
+	
 	if inimigo2.validacao == false then
-		inimigo2.y = 500
+		--inimigo2.y = 500
 		--enemy:scrollEnemy2()
 		inimigo2.validacao = true
 		flag2 = 1
-		inimigo2 = criarInimigo(70,0,"inimigo2")
+		inimigo2 = criarInimigo(70,-50,"inimigo2")
 		--enemy:MoverEnemy2()
 
 	end

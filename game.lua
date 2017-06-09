@@ -4,7 +4,7 @@ local enemy = require ("enemy")
 local scene = composer.newScene()
 local physics = require("physics")
 	  physics.start()
-	  physics.setDrawMode('hybrid')
+	--  physics.setDrawMode('hybrid')
 
 local image
 local left
