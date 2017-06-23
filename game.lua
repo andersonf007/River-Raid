@@ -4,7 +4,7 @@ local enemy = require ("enemy")
 local scene = composer.newScene()
 local physics = require("physics")
 	  physics.start()
-	--  physics.setDrawMode('hybrid')
+	 physics.setDrawMode('hybrid')
 
 local image
 local left
@@ -14,9 +14,6 @@ local estrada2
 local laser
 local ButtonFire
 local ButtonFireValidacao = true
-
-
-enemy:createEnemy()
 
 function startEnemy() -- cria os inimigos depois do game over
 	enemy:createEnemy()
@@ -29,6 +26,8 @@ function startGame() -- inicializa o botao de tiro depois do game over
 end
 
 function scene:create(event)
+
+		enemy:createEnemy()
 
 		local groupScene = self.view
      
@@ -68,11 +67,11 @@ function scene:create(event)
 		timer.performWithDelay( 80,scrollingRoadEstrada1 ,0 )
 		trm = timer.performWithDelay( 80,chamaMetodoDoEnemy ,0 ) -- faz o inimigo se movimentar entre um determinado tempo
 		--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		image:addEventListener("collision", onCollision) -- verifica a colisao	
-
+		image:addEventListener("collision", onCollision) -- verifica a colisao			
 end
 
- function chamaMetodoDoEnemy()-- chama os metodos dos inimigos
+function chamaMetodoDoEnemy()-- chama os metodos dos inimigos
+
 	enemy:MoverEnemy()
 	enemy:MoverEnemy2()
 	enemy:MoverEnemy3()
@@ -119,8 +118,44 @@ function scrollingRoadEstrada2(event) -- funcao de movimento da estrada
 	end
 end 
 
+function recriarInimigo1()
+	inimigo1.validacao = false
+	enemy:changePositionY1()
+	timer.resume(trm)
+	physics.start()
+	ButtonFireValidacao = true
+end
+
+function recriarInimigo2()
+	--print("opa")
+	inimigo2.validacao = false	
+	enemy:changePositionY2()
+	timer.resume(trm)
+	physics.start()
+	ButtonFireValidacao = true
+end
+
+function recriarInimigo3()
+	--print("opa")
+	inimigo3.validacao = false	
+	enemy:changePositionY3()
+	timer.resume(trm)
+	physics.start()
+	ButtonFireValidacao = true
+end
+
+function recriarInimigo4()
+	--print("opa")
+	inimigo4.validacao = false	
+	enemy:changePositionY4()
+	timer.resume(trm)
+	physics.start()
+	ButtonFireValidacao = true
+end
+
 function onCollision(event) -- funcao de colisao
-	  
+
+	--print("colidiu")
 	if event.phase == "began" then	
 
 		if event.target.name == "ship" then
@@ -131,115 +166,54 @@ function onCollision(event) -- funcao de colisao
 			composer.gotoScene("gameover")
 	
 		elseif event.target.name == "laser" then
-
+			
 			if event.other.name == "inimigo1" then
 				timer.pause(trm)
 				display.remove(event.target)
 				display.remove(event.other)
-				
-				--event.other.y = 470
-				--enemy:scrollEnemy1()
-				enemy:changePositionY1()
-				ButtonFireValidacao = true
-
+				physics.pause()
+				trm1 = timer.performWithDelay(40, recriarInimigo1)
 			end
 			if event.other.name == "inimigo2" then
 				timer.pause(trm)
-
 				display.remove(event.target)
 				display.remove(event.other)
-				inimigo2.validacao = false
-								--event.other.y = 470
-				--enemy:scrollEnemy2()
-				enemy:changePositionY2()
-				timer.resume(trm)
-				ButtonFireValidacao = true
-				
+				physics.pause()
+				trm2 = timer.performWithDelay( 40, recriarInimigo2 )
 			end
 			if event.other.name == "inimigo3" then
-				print("ui3")
+				timer.pause(trm)
+				display.remove(event.target)
+				display.remove(event.other)
+				physics.pause()
+				trm2 = timer.performWithDelay( 40, recriarInimigo3 )
 				
 			end
 			if event.other.name == "inimigo4" then
-				print("ui4")
+				timer.pause(trm)
+				display.remove(event.target)
+				display.remove(event.other)
+				physics.pause()
+				trm2 = timer.performWithDelay( 40, recriarInimigo4 )
 				
 			end
 		end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		--target.x = laser
-		--other.x = inimigo
-
-		--target.x = nave
-
-	--	print(inimigo2.x)
-	--	print(laser.x)
-	--	print("laser")
-	--	print(image.x)
-	--	print(event.target.x)
-	--	print("inimigo")
-	--	print(event.other.x)
-	--	print(inimigo2.x)
-
-	--	inimigo2:removeSelf()
-
-	--enemy:scrollEnemy2()
-		--print(event.target.x)
-		--print(self.other)
-	--	print(event.other.x)
-
-		--timer.cancel(trm)
-		--display.remove(ButtonFire)
-		--enemy:destroy()
-		--composer.gotoScene("gameover")
-	
-	
 	end
 end
 
 function createLaser(event) -- cria o laser
 
 	if ButtonFireValidacao == true then
-
+		--print("criou")
 		ButtonFireValidacao = false
-		group = display.newGroup()
 		laser = display.newImage("Lazer.png")
-		physics.addBody( laser, "dinamic", {isSensor = true})
-		laser.isBullet = true --  para se o corpo deve ser tratado como uma "bala". As balas estão sujeitas a detecção contínua de colisão em vez de detecção periódica de colisão em etapas de tempo
+		physics.addBody( laser, "kinematic")
 		laser.x = image.x
 		laser.y = image.y - 50
 		laser.collType = "laser"
 		laser.name = "laser"
+		laser:setLinearVelocity(0, -300)
 		laser:addEventListener("collision", onCollision)
-		group:insert( laser )
-
 		tm = timer.performWithDelay(10,moverLaser,0)
 	end
 
@@ -247,18 +221,14 @@ end
 
 function moverLaser()
 
-	for i=1,group.numChildren do
-
-   		if group[i].y <= 10 then
-   			--print("menor")
+	if laser.y ~= nil then
+   		if laser.y <= -25 then
+   			
    			display.remove( laser )
-   			timer.cancel(tm)
    			ButtonFireValidacao = true
-   		else 
-			laser:translate( 0, -25 )
-			ButtonFireValidacao = false
-		end
-	end
+   			
+   		end
+   	end
 end
 
 function scene:show(event)
