@@ -5,10 +5,18 @@ local scene = composer.newScene()
 
 local labelGameOver
 local buttonRestart
+local resultadoPontuacao
+
+	
 
 function scene:create(event)
 	
    local grupoDeSena = self.view
+
+    resultadoPontuacao = display.newText( "pontuação : "..pontuacao.text, display.contentWidth/2, 10 )
+	resultadoPontuacao:setFillColor( 1, 0, 0 )
+	grupoDeSena:insert(resultadoPontuacao)
+
 
    labelGameOver = display.newText({text="Game Over", x=display.contentWidth/2, y = display.contentHeight/2 - 23})
    grupoDeSena:insert(labelGameOver)
@@ -20,6 +28,7 @@ end
 
 function irOutroTela(event)
 	if event.phase == "began" then
+		display.remove(resultadoPontuacao)
 		startEnemy()
 		startGame()
 		composer.gotoScene("game")

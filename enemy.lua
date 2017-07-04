@@ -14,7 +14,7 @@ function criarInimigo(x,y,nome)
 	inimigo:setFillColor(1, 0.5, 0.5, 1)
 	inimigo.x = x
 	inimigo.y = y
-	inimigo.speed = 1
+	inimigo.speed = 5
 	inimigo.name = nome
 	inimigo.validacao = true
 	physics.setGravity(0,0)
@@ -30,6 +30,38 @@ function enemy:createEnemy() -- criar inimigo
 	inimigo2 = criarInimigo(70,250,"inimigo2")
 	inimigo3 = criarInimigo(240,130,"inimigo3")
 	inimigo4 = criarInimigo(240,-180,"inimigo4")
+end
+
+-------//////////////////////////////////////////////////////////////////////////////////////-----
+
+function enemy:mudarSpeed(valor)
+	
+	if (valor == 1) then
+		inimigo1.speed = 7
+		inimigo2.speed = 7
+		inimigo3.speed = 7
+		inimigo4.speed = 7
+	elseif valor == 2 then
+		inimigo1.speed = 9
+		inimigo2.speed = 9
+		inimigo3.speed = 9
+		inimigo4.speed = 9
+	elseif valor == 3 then
+		inimigo1.speed = 11
+		inimigo2.speed = 11
+		inimigo3.speed = 11
+		inimigo4.speed = 11
+	elseif valor == 4 then
+		inimigo1.speed = 13
+		inimigo2.speed = 13
+		inimigo3.speed = 13
+		inimigo4.speed = 13
+	elseif valor == 5 then
+		inimigo1.speed = 15
+		inimigo2.speed = 15
+		inimigo3.speed = 15
+		inimigo4.speed = 15
+	end
 end
 
 -------//ENEMY1/////////////////////////////////////////////////////////////////////////////------
@@ -53,7 +85,7 @@ function enemy:moverEnemyRight()
 		if inimigo1.x >= 125 then
 			chamadaDaFuncaoDoMovimentoDoInimigo = 2
 		else 
-			inimigo1.x = inimigo1.x + 5
+			inimigo1.x = inimigo1.x + inimigo1.speed
 		end
 	end
 end
@@ -62,7 +94,7 @@ function enemy:moverEnemyDown()
 
 	if inimigo1.validacao == true then
 
-		inimigo1.y = inimigo1.y + 15
+		inimigo1.y = inimigo1.y + 15 + inimigo1.speed
 		chamadaDaFuncaoDoMovimentoDoInimigo = 3
 		
 	end
@@ -74,7 +106,7 @@ function enemy:moverEnemyLeft()
 		if inimigo1.x <= 70 then
 			chamadaDaFuncaoDoMovimentoDoInimigo = 4
 		else
-			inimigo1.x = inimigo1.x - 5
+			inimigo1.x = inimigo1.x - inimigo1.speed
 		end
 	end
 end
@@ -83,7 +115,7 @@ function enemy:moverEnemyDown2()
 
 	if inimigo1.validacao == true then
 
-		inimigo1.y = inimigo1.y + 15
+		inimigo1.y = inimigo1.y + 15 + inimigo1.speed
 
 		chamadaDaFuncaoDoMovimentoDoInimigo = 1
 	end
@@ -111,7 +143,7 @@ function enemy:moverEnemy2Right()
 		if inimigo2.x >= 125 then
 			chamadaDaFuncaoDoMovimentoDoInimigo2 = 2
 		else 
-			inimigo2.x = inimigo2.x + 5
+			inimigo2.x = inimigo2.x + inimigo2.speed
 		end
 	end
 end
@@ -120,7 +152,7 @@ function enemy:moverEnemy2Down()
 
 	if inimigo2.validacao == true then
 
-		inimigo2.y = inimigo2.y + 15
+		inimigo2.y = inimigo2.y + 15 + inimigo2.speed
 		chamadaDaFuncaoDoMovimentoDoInimigo2 = 3
 	end
 end
@@ -132,7 +164,7 @@ function enemy:moverEnemy2Left()
 		if inimigo2.x <= 70 then
 			chamadaDaFuncaoDoMovimentoDoInimigo2 = 4
 		else
-			inimigo2.x = inimigo2.x - 5
+			inimigo2.x = inimigo2.x - inimigo2.speed
 		end
 	end
 end
@@ -140,7 +172,7 @@ end
 function enemy:moverEnemy2Down2()
 
 	if inimigo2.validacao == true then
-		inimigo2.y = inimigo2.y + 15
+		inimigo2.y = inimigo2.y + 15 + inimigo2.speed
 		chamadaDaFuncaoDoMovimentoDoInimigo2 = 1
 	end
 end
@@ -165,7 +197,7 @@ function enemy:moverEnemy3Left()
 		if inimigo3.x <= 195 then
 			chamadaDaFuncaoDoMovimentoDoInimigo3 = 2
 		else
-			inimigo3.x = inimigo3.x - 5
+			inimigo3.x = inimigo3.x - inimigo3.speed
 		end
 	end
 end
@@ -173,7 +205,7 @@ end
 function enemy:moverEnemy3Down()
 
 	if inimigo3.validacao == true then
-		inimigo3.y = inimigo3.y + 15
+		inimigo3.y = inimigo3.y + 15 + inimigo3.speed
 		chamadaDaFuncaoDoMovimentoDoInimigo3 = 3
 	end
 end
@@ -184,7 +216,7 @@ function enemy:moverEnemy3Right()
 		if inimigo3.x >= 250 then
 			chamadaDaFuncaoDoMovimentoDoInimigo3 = 4
 		else
-			inimigo3.x = inimigo3.x + 5
+			inimigo3.x = inimigo3.x + inimigo3.speed
 		end
 	end
 end
@@ -192,7 +224,7 @@ end
 function enemy:moverEnemy3Down2()
 
 	if inimigo3.validacao == true then
-		inimigo3.y = inimigo3.y + 15
+		inimigo3.y = inimigo3.y + 15 +inimigo3.speed
 		chamadaDaFuncaoDoMovimentoDoInimigo3 = 1
 	end
 end
@@ -217,7 +249,7 @@ function enemy:moverEnemy4Left()
 		if inimigo4.x <= 195 then
 			chamadaDaFuncaoDoMovimentoDoInimigo4 = 2
 		else
-			inimigo4.x = inimigo4.x - 5
+			inimigo4.x = inimigo4.x - inimigo4.speed
 		end
 	end
 end
@@ -225,7 +257,7 @@ end
 function enemy:moverEnemy4Down()
 
 	if inimigo4.validacao == true then
-		inimigo4.y = inimigo4.y + 15
+		inimigo4.y = inimigo4.y + 15 + inimigo4.speed
 		chamadaDaFuncaoDoMovimentoDoInimigo4 = 3
 	end
 end
@@ -236,7 +268,7 @@ function enemy:moverEnemy4Right()
 		if inimigo4.x >= 250 then
 			chamadaDaFuncaoDoMovimentoDoInimigo4 = 4
 		else
-			inimigo4.x = inimigo4.x + 5
+			inimigo4.x = inimigo4.x + inimigo4.speed
 		end
 	end
 end
@@ -244,7 +276,7 @@ end
 function enemy:moverEnemy4Down2()
 
 	if inimigo4.validacao == true then
-		inimigo4.y = inimigo4.y + 15
+		inimigo4.y = inimigo4.y + 15 + inimigo4.speed
 		chamadaDaFuncaoDoMovimentoDoInimigo4 = 1
 	end
 end
